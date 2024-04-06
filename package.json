@@ -1,0 +1,34 @@
+{
+  "name": "electron-lune-bindings",
+  "description": "connect lune to your electron application",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "repository": {
+    "url": "git+https://github.com/highflowey/electron-lune-bindings.git"
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [
+    "lune",
+    "electron",
+    "event handler"
+  ],
+  "author": "ashleyflow",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.12.5",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.4"
+  },
+  "dependencies": {
+    "electron": "^29.2.0",
+    "electron-is-dev": "^3.0.1"
+  },
+  "bugs": {
+    "url": "https://github.com/highflowey/electron-lune-bindings/issues"
+  },
+  "homepage": "https://github.com/highflowey/electron-lune-bindings#readme"
+}
