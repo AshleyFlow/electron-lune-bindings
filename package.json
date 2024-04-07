@@ -1,7 +1,7 @@
 {
   "name": "electron-lune-bindings",
   "description": "connect lune to your electron application",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -9,7 +9,8 @@
     "url": "git+https://github.com/highflowey/electron-lune-bindings.git"
   },
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "publish": "npm run build && npm publish"
   },
   "keywords": [
     "lune",
