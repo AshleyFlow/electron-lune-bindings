@@ -26,8 +26,8 @@ export type LuneData = LuneMethodData | LuneInvokeData;
 
 export async function bindWindowToLune(
   win: BrowserWindow,
-  absolutePathToLuau: string,
-  absoltePathToLuneExecutable: string,
+  spawnLuneProcessDev: () => ChildProcess,
+  spawnLuneProcessExecutable: () => ChildProcess,
   port: number
 ) {
   const isDev = (await _isDev).default;
@@ -39,16 +39,10 @@ export async function bindWindowToLune(
     }
 
     return new Promise<undefined>((res) => {
-      const lune = child_process.spawn(
-        "lune",
-        ["run", isDev ? absolutePathToLuau : absoltePathToLuneExecutable],
-        {
-          cwd: __dirname,
-        }
-      );
+      let lune = isDev ? spawnLuneProcessDev() : spawnLuneProcessExecutable();
 
-      lune.stdout.setEncoding("utf8");
-      lune.stdout.on("data", (buffer: Buffer) => {
+      lune.stdout?.setEncoding("utf8");
+      lune.stdout?.on("data", (buffer: Buffer) => {
         const output = buffer.toString();
         const lines = output.split("\n");
 
@@ -74,8 +68,8 @@ export async function bindWindowToLune(
         });
       });
 
-      lune.stderr.setEncoding("utf8");
-      lune.stderr.on("data", (buffer: Buffer) => {
+      lune.stderr?.setEncoding("utf8");
+      lune.stderr?.on("data", (buffer: Buffer) => {
         const output = buffer.toString();
         const lines = output.split("\n");
 
