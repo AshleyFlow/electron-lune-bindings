@@ -31,13 +31,7 @@ export async function bindWindowToLune(
   port: number
 ) {
   const isDev = (await _isDev).default;
-  let last_lune_process: ChildProcess;
-
   function spawn_lune() {
-    if (last_lune_process != undefined) {
-      last_lune_process.kill();
-    }
-
     return new Promise<undefined>((res) => {
       let lune = isDev ? spawnLuneProcessDev() : spawnLuneProcessExecutable();
 
@@ -55,6 +49,8 @@ export async function bindWindowToLune(
               if (parsed.type === "Method") {
                 if (parsed.method === "ready") {
                   res(undefined);
+                } else if (parsed.method === "kill") {
+                  lune.kill();
                 }
 
                 win.webContents.send(parsed.method, parsed.headers);
@@ -79,8 +75,6 @@ export async function bindWindowToLune(
           }
         });
       });
-
-      last_lune_process = lune;
     });
   }
 
@@ -107,7 +101,9 @@ export async function bindWindowToLune(
         channel,
         value: JSON.stringify(value),
       },
-    }).catch((err) => console.error(err));
+    }).catch((_) => {
+      // this is just silly.
+    });
   });
 }
 
